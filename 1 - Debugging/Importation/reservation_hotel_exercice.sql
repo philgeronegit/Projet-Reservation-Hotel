@@ -21,6 +21,14 @@ SET time_zone = "+00:00";
 --
 
 DROP TABLE IF EXISTS `chambres`;
+DROP TABLE IF EXISTS `tarifs`;
+DROP TABLE IF EXISTS `chambre_type_couchage`;
+DROP TABLE IF EXISTS `chambre_types`;
+DROP TABLE IF EXISTS `couchages`;
+DROP TABLE IF EXISTS `hotels`;
+DROP TABLE IF EXISTS `salles_de_bain`;
+DROP TABLE IF EXISTS `utilisateurs`;
+
 CREATE TABLE IF NOT EXISTS `chambres` (
   `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
   `id_hotel` int UNSIGNED NOT NULL,
@@ -33,10 +41,10 @@ CREATE TABLE IF NOT EXISTS `chambres` (
   KEY `FK_Chambres_TypesChambre` (`id_type`)
 ) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-DROP TABLE IF EXISTS `chambre_types`;
 CREATE TABLE IF NOT EXISTS `chambre_types` (
   `id` int UNSIGNED NOT NULL,
   `nom` varchar(50) NOT NULL,
+  `description` VARCHAR(255) NOT NULL,
   `id_salle_de_bain` tinyint UNSIGNED NOT NULL,
   PRIMARY KEY (`id`),
   KEY `id_salle_de_bain` (`id_salle_de_bain`)
@@ -46,7 +54,6 @@ CREATE TABLE IF NOT EXISTS `chambre_types` (
 -- Structure de la table `chambre_type_couchage`
 --
 
-DROP TABLE IF EXISTS `chambre_type_couchage`;
 CREATE TABLE IF NOT EXISTS `chambre_type_couchage` (
   `id_type` int UNSIGNED NOT NULL,
   `id_couchage` tinyint UNSIGNED NOT NULL,
@@ -61,7 +68,6 @@ CREATE TABLE IF NOT EXISTS `chambre_type_couchage` (
 -- Structure de la table `couchages`
 --
 
-DROP TABLE IF EXISTS `couchages`;
 CREATE TABLE IF NOT EXISTS `couchages` (
   `id` tinyint UNSIGNED NOT NULL AUTO_INCREMENT,
   `nom` varchar(20) NOT NULL,
@@ -76,7 +82,6 @@ CREATE TABLE IF NOT EXISTS `couchages` (
 -- Structure de la table `hotels`
 --
 
-DROP TABLE IF EXISTS `hotels`;
 CREATE TABLE IF NOT EXISTS `hotels` (
   `id` int UNSIGNED NOT NULL,
   `libelle` varchar(50) NOT NULL COMMENT 'unique',
@@ -91,7 +96,6 @@ CREATE TABLE IF NOT EXISTS `hotels` (
 -- Structure de la table `salles_de_bain`
 --
 
-DROP TABLE IF EXISTS `salles_de_bain`;
 CREATE TABLE IF NOT EXISTS `salles_de_bain` (
   `id` tinyint UNSIGNED NOT NULL AUTO_INCREMENT,
   `nom` varchar(50) NOT NULL,
@@ -105,12 +109,11 @@ CREATE TABLE IF NOT EXISTS `salles_de_bain` (
 -- Structure de la table `tarifs`
 --
 
-DROP TABLE IF EXISTS `tarifs`;
 CREATE TABLE IF NOT EXISTS `tarifs` (
   `id` int UNSIGNED NOT NULL,
   `id_hotel` int UNSIGNED DEFAULT NULL,
   `id_type` int UNSIGNED DEFAULT NULL,
-  `dateDebut` date DEFAULT NULL,
+  `date_debut` date DEFAULT NULL,
   `prix` decimal(7,2) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_Tarifs_Hotels` (`id_hotel`),
@@ -123,7 +126,6 @@ CREATE TABLE IF NOT EXISTS `tarifs` (
 -- Structure de la table `utilisateurs`
 --
 
-DROP TABLE IF EXISTS `utilisateurs`;
 CREATE TABLE IF NOT EXISTS `utilisateurs` (
   `id` int NOT NULL AUTO_INCREMENT,
   `prenom` varchar(50) NOT NULL,
